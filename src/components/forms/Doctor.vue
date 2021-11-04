@@ -1,17 +1,18 @@
 <template>
   <v-card>
-    <v-card-title>
-      <span class="text-h5">Add Doctor</span>
+    <v-card-title class="primary white--text">
+      <span class="text-h6">Add Doctor</span>
     </v-card-title>
-    {{ form }}
 
-    <v-card-text>
+    <v-card-text class="mt-6">
       <v-container>
         <v-row>
           <v-col cols="12">
             <v-text-field
               v-model="form.name"
               label="Name Surname"
+              outlined
+              hide-details
             ></v-text-field>
           </v-col>
           <v-col cols="12">
@@ -22,27 +23,39 @@
               outlined
               item-text="value"
               item-value="key"
+              hide-details
             ></v-combobox>
           </v-col>
           <v-col cols="12">
-            <v-text-field v-model="form.email" label="Email"></v-text-field>
+            <v-text-field
+              v-model="form.email"
+              label="Email"
+              outlined
+              hide-details
+            ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
               v-model="form.password"
               label="Password"
+              outlined
+              hide-details
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
               v-model="confirmPassword"
               label="Confirm Password"
+              outlined
+              hide-details
             ></v-text-field>
           </v-col>
           <v-col cols="12">
             <v-text-field
               v-model="form.fee"
               label="Consultancy Fee"
+              outlined
+              hide-details
             ></v-text-field>
           </v-col>
         </v-row>

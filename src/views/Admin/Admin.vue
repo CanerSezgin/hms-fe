@@ -1,16 +1,29 @@
 <template>
   <div>
     <v-navigation-drawer v-model="drawer" app>
-      <v-sheet color="grey lighten-4" class="pa-4">
-        <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
+      <v-sheet color="grey lighten-4" class="pa-4 text-center">
+        <v-avatar class="mb-4" color="grey darken-1" size="64">
+          <img
+            src="https://media-exp1.licdn.com/dms/image/C4D03AQHmzeFr51sTDw/profile-displayphoto-shrink_100_100/0/1620590863176?e=1641427200&v=beta&t=kpWio5Mw0wByXmCLaU9J1tRF7-0Ba5YVn6zfHy4H5JQ"
+            alt="John"
+          />
+        </v-avatar>
 
-        <div>john@vuetifyjs.com</div>
+        <div>caner@sezgin.com</div>
       </v-sheet>
 
       <v-divider></v-divider>
 
       <v-list>
-        <v-list-item v-for="[icon, text] in links" :key="icon" link>
+        <v-list-item
+          v-for="[icon, text, to] in links"
+          :key="icon"
+          link
+          exact
+          :to="to"
+          active-class="primary white--text"
+          class="py-3 px-2"
+        >
           <v-list-item-icon>
             <v-icon>{{ icon }}</v-icon>
           </v-list-item-icon>
@@ -25,7 +38,7 @@
     <v-container class="py-8 px-6" fluid>
       <v-row>
         <v-col cols="12">
-        <router-view></router-view>
+          <router-view></router-view>
         </v-col>
       </v-row>
     </v-container>
@@ -38,10 +51,10 @@ export default {
     cards: ['Today', 'Yesterday'],
     drawer: null,
     links: [
-      ['mdi-account-group', 'Doctor List'],
-      ['mdi-send', 'Send'],
-      ['mdi-delete', 'Trash'],
-      ['mdi-alert-octagon', 'Spam'],
+      ['mdi-account-group', 'Doctor List', 'doctors'],
+      ['mdi-map-marker-outline', 'Appointments', 'appointments'],
+      ['mdi-file-document-edit-outline', 'Prescriptions', 'prescriptions'],
+      ['mdi-alert-octagon', 'Spam', ''],
     ],
   }),
 };
