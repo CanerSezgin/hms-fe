@@ -51,7 +51,6 @@ export default {
     cards: ['Today', 'Yesterday'],
     drawer: null,
     links: [
-      ['mdi-account-group', 'Doctor List', 'doctors'],
       ['mdi-map-marker-outline', 'Appointments', 'appointments'],
       ['mdi-file-document-edit-outline', 'Prescriptions', 'prescriptions'],
       ['mdi-alert-octagon', 'Spam', ''],
