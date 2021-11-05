@@ -70,6 +70,7 @@ export default {
     dialogDelete: false,
 
     headers: [
+      { text: 'id', value: 'id' },
       {
         text: 'Name Surname',
         value: 'name',
@@ -201,7 +202,7 @@ export default {
 
     async save() {
       console.log('saving', this.form);
-      
+
       // todo remove this when be implemented
       this.items.push({
         id: new Date().getTime(),

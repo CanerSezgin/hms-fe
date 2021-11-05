@@ -20,7 +20,7 @@
           :key="icon"
           link
           exact
-          :to="to"
+          :to="`/patient/${to}`"
           active-class="primary white--text"
           class="py-3 px-2"
         >
@@ -51,6 +51,7 @@ export default {
     cards: ['Today', 'Yesterday'],
     drawer: null,
     links: [
+          ['mdi-view-dashboard', 'Dashboard', ''],
       ['mdi-map-marker-outline', 'Appointments', 'appointments'],
       ['mdi-pill', 'Prescriptions', 'prescriptions'],
       ['mdi-emoticon-sick-outline', 'Diseases', 'diseases'],

@@ -20,7 +20,7 @@
           :key="icon"
           link
           exact
-          :to="to"
+          :to="`/admin/${to}`"
           active-class="primary white--text"
           class="py-3 px-2"
         >
@@ -51,9 +51,10 @@ export default {
     cards: ['Today', 'Yesterday'],
     drawer: null,
     links: [
+      ['mdi-view-dashboard', 'Dashboard', ''],
+      ['mdi-account-group', 'Doctors', 'doctors'],
       ['mdi-map-marker-outline', 'Appointments', 'appointments'],
       ['mdi-file-document-edit-outline', 'Prescriptions', 'prescriptions'],
-      ['mdi-alert-octagon', 'Spam', ''],
     ],
   }),
 };

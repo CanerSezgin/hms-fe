@@ -7,9 +7,10 @@
     <v-data-table
       :headers="headers"
       :items="timeTable"
-      :items-per-page="15"
+      :items-per-page="20"
       sort-by="time"
       disable-sort
+      hide-default-footer
     >
       <template v-slot:[`item.status`]="{ item }">
         <div v-if="item.status">

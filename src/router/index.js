@@ -12,9 +12,9 @@ import Prescriptions from '../views/Admin/Prescriptions.vue';
 import Doctor from '../views/Doctor';
 import DoctorAppointments from '../views/Doctor/Appointments.vue';
 
-
 // Patient Routes
 import Patient from '../views/Patient';
+import PatientAppointments from '../views/Patient/Appointments.vue';
 import Diseases from '../views/Patient/Diseases.vue';
 import Reports from '../views/Patient/Reports.vue';
 import Analysis from '../views/Patient/Analysis.vue';
@@ -73,8 +73,8 @@ const routes = [
     children: [
       {
         path: 'appointments',
-        name: 'Appointments',
-        component: Appointments,
+        name: 'PatientAppointments',
+        component: PatientAppointments,
       },
       {
         path: 'prescriptions',

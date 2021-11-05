@@ -1,12 +1,18 @@
 <template>
     <div>
-        Prescriptions
+        
+        <v-select items=""></v-select>
+
     </div>
 </template>
 
 <script>
     export default {
-        
+        data() {
+            return {
+                specialisa: value
+            }
+        },
     }
 </script>
 

@@ -21,8 +21,6 @@
               :items="specializations"
               label="Specializations"
               outlined
-              item-text="value"
-              item-value="key"
               hide-details
             ></v-combobox>
           </v-col>
@@ -78,10 +76,7 @@ export default {
 
   data() {
     return {
-      specializations: [
-        { key: 'x', value: 'val1' },
-        { key: 'y', value: 'val2' },
-      ],
+      specializations: ['val1', 'val2'],
 
       confirmPassword: '',
     };
