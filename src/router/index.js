@@ -15,6 +15,7 @@ import DoctorAppointments from '../views/Doctor/Appointments.vue';
 // Patient Routes
 import Patient from '../views/Patient';
 import PatientAppointments from '../views/Patient/Appointments.vue';
+import NewAppointment from '../views/Patient/NewAppointment.vue';
 import Diseases from '../views/Patient/Diseases.vue';
 import Reports from '../views/Patient/Reports.vue';
 import Analysis from '../views/Patient/Analysis.vue';
@@ -75,6 +76,11 @@ const routes = [
         path: 'appointments',
         name: 'PatientAppointments',
         component: PatientAppointments,
+      },
+      {
+        path: 'new-appointment',
+        name: 'NewAppointment',
+        component: NewAppointment,
       },
       {
         path: 'prescriptions',

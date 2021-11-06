@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import timeTable from '@/utils/timeTable';
 export default {
   props: {
     appointments: { type: Array, required: true },
@@ -87,32 +88,11 @@ export default {
         { text: 'Time', value: 'time' },
         { text: 'Patient', value: 'patient' },
       ],
-      time: [
-        '09:00 - 09:30',
-        '09:30 - 10:00',
-        '10:00 - 10:30',
-        '10:30 - 11:00',
-        '11:00 - 11:30',
-        '11:30 - 12:00',
-        '13:00 - 13:30',
-        '13:30 - 14:00',
-        '14:00 - 14:30',
-        '14:30 - 15:00',
-        '15:00 - 15:30',
-        '15:30 - 16:00',
-      ],
     };
   },
   computed: {
     timeTable() {
-      return this.time.map((t) => {
-        const appointment =
-          this.appointments.find((app) => app.time === t) || {};
-        return {
-          time: t,
-          ...appointment,
-        };
-      });
+      return timeTable(this.appointments);
     },
   },
 };
