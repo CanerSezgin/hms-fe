@@ -15,6 +15,10 @@ Vue.filter('formatPhone', function (val) {
   return null;
 });
 
+Vue.filter('capitalize', function (val) {
+  return val.charAt(0).toUpperCase() + val.slice(1);
+});
+
 new Vue({
   router,
   store,

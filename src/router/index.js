@@ -10,6 +10,7 @@ import Prescriptions from '../views/Admin/Prescriptions.vue';
 
 // Doctor Routes
 import Doctor from '../views/Doctor';
+import DoctorAppointment from '../views/Doctor/Appointment.vue';
 import DoctorAppointments from '../views/Doctor/Appointments.vue';
 
 // Patient Routes
@@ -59,6 +60,11 @@ const routes = [
         path: 'appointments',
         name: 'DoctorAppointments',
         component: DoctorAppointments,
+      },
+      {
+        path: 'appointment',
+        name: 'DoctorAppointment',
+        component: DoctorAppointment,
       },
       {
         path: 'prescriptions',
