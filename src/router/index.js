@@ -62,7 +62,7 @@ const routes = [
         component: DoctorAppointments,
       },
       {
-        path: 'appointment',
+        path: 'appointment/:appointmentId',
         name: 'DoctorAppointment',
         component: DoctorAppointment,
       },

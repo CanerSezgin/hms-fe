@@ -71,6 +71,12 @@
           </div>
         </div>
       </template>
+
+      <template v-slot:[`item.actions`]="{ item }">
+        <div v-if="item.patient">
+          <v-btn :to="`appointment/${item._id}`" color="primary" outlined small>Details</v-btn>
+        </div>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -87,6 +93,7 @@ export default {
         { text: 'Status', value: 'status' },
         { text: 'Time', value: 'time' },
         { text: 'Patient', value: 'patient' },
+        { text: 'Actions', value: 'actions' },
       ],
     };
   },

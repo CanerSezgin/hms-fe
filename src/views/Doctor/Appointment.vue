@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { getAppointmentById } from "@/services/api"
 import AnalysisList from '@/components/lists/Analysis';
 export default {
   components: { AnalysisList },
@@ -57,6 +58,11 @@ export default {
       ],
     };
   },
+    async created(){
+    const appointment = await getAppointmentById("61c86ca12e513175bc9410c9");
+    console.log(appointment)
+  },
+
 };
 </script>
 
