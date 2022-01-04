@@ -26,6 +26,9 @@
           </v-btn>
         </v-toolbar>
       </template>
+      <template v-slot:[`item.name`]="{ item }">
+        {{ item.name }} {{ item.surname }}
+      </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-btn icon color="primary">
           <v-icon small class="mr-2" @click="openEditItemForm(item.id)">
@@ -59,6 +62,7 @@
 </template>
 
 <script>
+import { doctorService } from '@/services/api';
 import Doctor from '@/components/forms/Doctor';
 
 export default {
@@ -77,21 +81,25 @@ export default {
       },
       { text: 'Specialization', value: 'specialization' },
       { text: 'Email', value: 'email' },
-      { text: 'Password', value: 'password' },
       { text: 'Fees', value: 'fee' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
     items: [],
   }),
 
-  created() {
-    this.initialize();
+  async created() {
+    await this.setItems();
   },
 
   methods: {
+    async setItems() {
+      this.items = await doctorService.getAll();
+      console.log({ doctors: this.items });
+    },
     getDefaultForm() {
       return {
         name: '',
+        surname: '',
         specialization: '',
         email: '',
         password: '',
@@ -110,105 +118,15 @@ export default {
       this.form = doctor;
       this.formDialog = true;
     },
-    initialize() {
-      this.items = [
-        {
-          id: 1,
-          name: 'Frozen Yogurt',
-          specialization: 159,
-          email: 6.0,
-          password: 24,
-          fee: 4.0,
-        },
-        {
-          id: 2,
-          name: 'Ice cream sandwich',
-          specialization: 237,
-          email: 9.0,
-          password: 37,
-          fee: 4.3,
-        },
-        {
-          id: 3,
-          name: 'Eclair',
-          specialization: 262,
-          email: 16.0,
-          password: 23,
-          fee: 6.0,
-        },
-        {
-          id: 4,
-          name: 'Cupcake',
-          specialization: 305,
-          email: 3.7,
-          password: 67,
-          fee: 4.3,
-        },
-        {
-          id: 5,
-          name: 'Gingerbread',
-          specialization: 356,
-          email: 16.0,
-          password: 49,
-          fee: 3.9,
-        },
-        {
-          id: 6,
-          name: 'Jelly bean',
-          specialization: 375,
-          email: 0.0,
-          password: 94,
-          fee: 0.0,
-        },
-        {
-          id: 7,
-          name: 'Lollipop',
-          specialization: 392,
-          email: 0.2,
-          password: 98,
-          fee: 0,
-        },
-        {
-          id: 8,
-          name: 'Honeycomb',
-          specialization: 408,
-          email: 3.2,
-          password: 87,
-          fee: 6.5,
-        },
-        {
-          id: 9,
-          name: 'Donut',
-          specialization: 452,
-          email: 25.0,
-          password: 51,
-          fee: 4.9,
-        },
-        {
-          id: 10,
-          name: 'KitKat',
-          specialization: 518,
-          email: 26.0,
-          password: 65,
-          fee: 7,
-        },
-      ];
-    },
-
-    deleteItem(e, id) {
-      const index = this.items.findIndex((item) => item.id === id);
-      this.items.splice(index, 1);
+    async deleteItem(e, id) {
+      await doctorService.delete(id);
+      await this.setItems();
     },
 
     async save() {
       console.log('saving', this.form);
-
-      // todo remove this when be implemented
-      this.items.push({
-        id: new Date().getTime(),
-        ...this.form,
-      });
-
+      await doctorService.create(this.form);
+      await this.setItems();
       this.formDialog = false;
     },
   },

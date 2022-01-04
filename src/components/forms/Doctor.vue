@@ -10,7 +10,15 @@
           <v-col cols="12">
             <v-text-field
               v-model="form.name"
-              label="Name Surname"
+              label="Name"
+              outlined
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-text-field
+              v-model="form.surname"
+              label="Surname"
               outlined
               hide-details
             ></v-text-field>
@@ -36,14 +44,6 @@
             <v-text-field
               v-model="form.password"
               label="Password"
-              outlined
-              hide-details
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              v-model="confirmPassword"
-              label="Confirm Password"
               outlined
               hide-details
             ></v-text-field>
@@ -77,8 +77,6 @@ export default {
   data() {
     return {
       specializations: ['val1', 'val2'],
-
-      confirmPassword: '',
     };
   },
 };
