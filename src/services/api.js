@@ -28,6 +28,25 @@ export const getAppointmentsByPatientId = async (patientId) => {
   return data;
 };
 
+export const testTypesService = {
+  async get(type){
+    const url = `/tests/types/${type}`;
+    const { data: { tests } } = await client.get(url);
+    return tests;
+  },
+  async create(payload){
+    const url = `/tests/types`;
+    await client.post(url, payload);
+  },
+  async update(payload){
+    const url = `/tests/types`;
+    await client.put(url, payload);
+  },
+  async delete(id){
+    const url = `/tests/types/${id}`;
+    await client.delete(url);
+  }
+}
 
 export const doctorService = {
   async getAll(){
@@ -43,5 +62,12 @@ export const doctorService = {
   async delete(userId){
     const url = `/admin/doctors/${userId}`
     await client.delete(url)
+  },
+  async update(payload){
+    const { id: userId } = payload;
+    delete payload.id;
+
+    const url = `/admin/doctors/${userId}`
+    await client.put(url, payload)
   }
 }

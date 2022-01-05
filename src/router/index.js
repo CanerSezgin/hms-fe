@@ -7,6 +7,8 @@ import Admin from '../views/Admin';
 import Doctors from '../views/Admin/Doctors.vue';
 import Appointments from '../views/Admin/Appointments.vue';
 import Prescriptions from '../views/Admin/Prescriptions.vue';
+import AdminAnalysis from "../views/Admin/Analysis.vue"
+import Imaging from "../views/Admin/Imaging.vue"
 
 // Doctor Routes
 import Doctor from '../views/Doctor';
@@ -38,6 +40,16 @@ const routes = [
         path: 'doctors',
         name: 'Doctors',
         component: Doctors,
+      },
+      {
+        path: 'imaging',
+        name: 'Imaging',
+        component: Imaging,
+      },
+      {
+        path: 'analysis',
+        name: 'Analysis',
+        component: AdminAnalysis,
       },
       {
         path: 'appointments',

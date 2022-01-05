@@ -17,21 +17,18 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Doctor List</v-toolbar-title>
+          <v-toolbar-title>{{ title }} List</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
 
           <v-btn color="primary" dark class="mb-2" @click="openNewItemForm">
-            Add Doctor
+            Add {{ title }}
           </v-btn>
         </v-toolbar>
       </template>
-      <template v-slot:[`item.name`]="{ item }">
-        {{ item.name }} {{ item.surname }}
-      </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-btn icon color="primary">
-          <v-icon small class="mr-2" @click="openEditItemForm(item.id)">
+          <v-icon small class="mr-2" @click="openEditItemForm(item._id)">
             mdi-pencil
           </v-icon>
         </v-btn>
@@ -46,7 +43,7 @@
             <v-btn>Cancel</v-btn>
           </div>
           <div>
-            <v-btn color="error" block @click="(e) => deleteItem(e, item.id)"
+            <v-btn color="error" block @click="(e) => deleteItem(e, item._id)"
               >Delete</v-btn
             >
           </div>
@@ -56,32 +53,38 @@
 
     <v-dialog v-model="formDialog" max-width="500px">
       Form: {{ form }} {{ actionType }}
-      <Doctor :form="form" :actionType="actionType" @close="formDialog = false" @save="save" />
+      <TestType
+        :form="form"
+        :actionType="actionType"
+        @close="formDialog = false"
+        @save="save"
+      />
     </v-dialog>
   </div>
 </template>
 
 <script>
-import { doctorService } from '@/services/api';
-import Doctor from '@/components/forms/Doctor';
+import { testTypesService } from '@/services/api';
+import TestType from '@/components/forms/TestType';
 
 export default {
-  components: { Doctor },
+  components: { TestType },
+  props: {
+    type: { type: String, required: true },
+    title: { type: String, required: true },
+  },
   data: () => ({
     search: '',
     form: {},
     formDialog: false,
     dialogDelete: false,
-    actionType: "",
+    actionType: '',
 
     headers: [
-      { text: 'id', value: 'id' },
       {
-        text: 'Name Surname',
+        text: 'Name',
         value: 'name',
       },
-      { text: 'Specialization', value: 'specialization' },
-      { text: 'Email', value: 'email' },
       { text: 'Fees', value: 'fee' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
@@ -94,50 +97,51 @@ export default {
 
   methods: {
     async setItems() {
-      this.items = await doctorService.getAll();
-      console.log({ doctors: this.items });
+      this.items = await testTypesService.get(this.type);
+      console.log(this.items);
     },
     getDefaultForm() {
       return {
+        type: this.type,
         name: '',
-        surname: '',
-        specialization: '',
-        email: '',
-        password: '',
         fee: 0,
       };
     },
     getItem(id) {
-      return this.items.find((doctor) => doctor.id === id);
+      return this.items.find((item) => item._id === id);
     },
     openNewItemForm() {
       this.form = this.getDefaultForm();
-      this.actionType = "new"
+      this.actionType = 'new';
       this.formDialog = true;
     },
     openEditItemForm(id) {
-      const doctor = this.getItem(id);
-      this.form = doctor;
-      this.actionType = "edit"
+      const item = this.getItem(id);
+      this.form = {
+        type: this.type,
+        name: item.name,
+        fee: item.fee,
+      };
+      this.actionType = 'edit';
       this.formDialog = true;
     },
 
     async deleteItem(e, id) {
-      await doctorService.delete(id);
+      await testTypesService.delete(id);
       await this.setItems();
     },
 
     async save() {
       console.log('saving', this.form);
-      if(this.actionType === "edit"){
-        await doctorService.update(this.form);
-      } else if (this.actionType === 'new'){
-        await doctorService.create(this.form);
+      if (this.actionType === 'edit') {
+        await testTypesService.update(this.form);
+      } else if (this.actionType === 'new') {
+        await testTypesService.create(this.form);
       }
 
       await this.setItems();
       this.formDialog = false;
-    }
+    },
   },
 };
 </script>

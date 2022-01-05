@@ -38,15 +38,18 @@
               label="Email"
               outlined
               hide-details
+              :readonly="actionType === 'edit'"
+              :filled="actionType === 'edit'"
             ></v-text-field>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" v-if="Object.keys(form).includes('password')">
             <v-text-field
               v-model="form.password"
               label="Password"
               outlined
               hide-details
             ></v-text-field>
+            <v-btn dark small color="primary" @click="generatePassword">Generate Random Password</v-btn>
           </v-col>
           <v-col cols="12">
             <v-text-field
@@ -72,12 +75,18 @@
 export default {
   props: {
     form: { type: Object, required: true },
+    actionType: { type: String, required: true }
   },
 
   data() {
     return {
       specializations: ['val1', 'val2'],
     };
+  },
+  methods: {
+    generatePassword() {
+      this.form.password = Math.random().toString(36).slice(-8);
+    }
   },
 };
 </script>

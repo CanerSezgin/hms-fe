@@ -16,8 +16,8 @@
 
       <v-list>
         <v-list-item
-          v-for="[icon, text, to] in links"
-          :key="icon"
+          v-for="([icon, text, to], index) in links"
+          :key="index"
           link
           exact
           :to="`/admin/${to}`"
@@ -53,6 +53,8 @@ export default {
     links: [
       ['mdi-view-dashboard', 'Dashboard', ''],
       ['mdi-account-group', 'Doctors', 'doctors'],
+      ['', 'Analysis', 'analysis'],
+      ['', 'Imaging', 'imaging'],
       ['mdi-map-marker-outline', 'Appointments', 'appointments'],
       ['mdi-file-document-edit-outline', 'Prescriptions', 'prescriptions'],
     ],
