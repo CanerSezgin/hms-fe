@@ -71,3 +71,27 @@ export const doctorService = {
     await client.put(url, payload)
   }
 }
+
+export const userService = {
+  async getAll(userType){
+    const url = `/admin/staff/${userType}`;
+    const { data: { users } } = await client.get(url);
+    return users;
+  },
+  async create(payload) {
+    const url = `/admin/staff`
+    const { data } = await client.post(url, payload)
+    return data
+  },
+  async delete(userId){
+    const url = `/admin/staff/${userId}`
+    await client.delete(url)
+  },
+  async update(payload){
+    const { _id: userId } = payload;
+    delete payload.id;
+
+    const url = `/admin/staff/${userId}`
+    await client.put(url, payload)
+  }
+}

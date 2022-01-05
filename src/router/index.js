@@ -4,7 +4,10 @@ import Home from '../views/Home.vue';
 
 // Admin Routes
 import Admin from '../views/Admin';
-import Doctors from '../views/Admin/Doctors.vue';
+import Doctors from '../views/Admin/Users/Doctors.vue';
+import Receptionist from '../views/Admin/Users/Receptionist.vue';
+import LabSpec from '../views/Admin/Users/LabSpec.vue';
+import AdminPatient from '../views/Admin/Users/Patient.vue';
 import Appointments from '../views/Admin/Appointments.vue';
 import Prescriptions from '../views/Admin/Prescriptions.vue';
 import AdminAnalysis from "../views/Admin/Analysis.vue"
@@ -40,6 +43,21 @@ const routes = [
         path: 'doctors',
         name: 'Doctors',
         component: Doctors,
+      },
+      {
+        path: 'receptionist',
+        name: 'Receptionist',
+        component: Receptionist,
+      },
+      {
+        path: 'lab-spec',
+        name: 'LabSpec',
+        component: LabSpec,
+      },
+      {
+        path: 'patient',
+        name: 'Patient',
+        component: AdminPatient,
       },
       {
         path: 'imaging',

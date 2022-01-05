@@ -53,6 +53,9 @@ export default {
     links: [
       ['mdi-view-dashboard', 'Dashboard', ''],
       ['mdi-account-group', 'Doctors', 'doctors'],
+      ['mdi-account-group', 'Lab Specialist', 'lab-spec'],
+      ['mdi-account-group', 'Receptionist', 'receptionist'],
+      ['mdi-account-group', 'Patient', 'patient'],
       ['', 'Analysis', 'analysis'],
       ['', 'Imaging', 'imaging'],
       ['mdi-map-marker-outline', 'Appointments', 'appointments'],
