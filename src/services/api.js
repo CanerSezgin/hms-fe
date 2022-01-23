@@ -6,6 +6,19 @@ const client = axios.create({
   headers: {},
 });
 
+export const authService = {
+  async signin(form){
+    const url = `/auth/signin`
+    const { data } = await client.post(url, form)
+    return data
+  },
+  async register(form){
+    const url = `/auth/register`
+    const { data } = await client.post(url, form)
+    return data
+  }
+}
+
 export const appointmentService = {
   async getById(appId) {
     const url = `/appointments/${appId}`;

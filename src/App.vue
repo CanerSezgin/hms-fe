@@ -3,13 +3,13 @@
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <div style="font-size: 1.3rem; font-weight: 500">
-          Hospital Management System
+          Hospital Management System ({{ isAuth }})
         </div>
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn text>
+      <v-btn v-if="isAuth" text @click="logout">
         <span class="mr-2">Logout</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
@@ -22,11 +22,14 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'App',
-
-  data: () => ({
-    //
-  }),
+  computed: {
+    ...mapGetters(['isAuth']),
+  },
+  methods: {
+    ...mapActions(["logout"])
+  },
 };
 </script>
