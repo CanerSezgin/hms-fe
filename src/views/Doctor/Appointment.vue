@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { getAppointmentById } from "@/services/api"
+import { appointmentService } from '@/services/api';
 import AnalysisList from '@/components/lists/Analysis';
 export default {
   components: { AnalysisList },
@@ -36,7 +36,7 @@ export default {
         {
           id: 'urine',
           text: 'Urine Analysis',
-          requestedAt: '11/6/2021, 2:13:56 PM',
+          requestedAt: '23/1/2022, 2:13:56 PM',
           status: 'pending',
         },
         {
@@ -58,11 +58,12 @@ export default {
       ],
     };
   },
-    async created(){
-    const appointment = await getAppointmentById("61c86ca12e513175bc9410c9");
-    console.log(appointment)
+  async created() {
+    const appointment = await appointmentService.getById(
+      '61c86ca12e513175bc9410c9'
+    );
+    console.log(appointment);
   },
-
 };
 </script>
 

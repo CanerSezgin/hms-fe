@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import specializations from "@/assets/json/spec.json"
 export default {
   props: {
     title: { type: String, required: true },
@@ -81,7 +82,7 @@ export default {
 
   data() {
     return {
-      specializations: ['val1', 'val2'],
+      specializations,
     };
   },
   methods: {

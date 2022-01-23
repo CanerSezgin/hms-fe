@@ -59,7 +59,6 @@ export default {
       ['', 'Analysis', 'analysis'],
       ['', 'Imaging', 'imaging'],
       ['mdi-map-marker-outline', 'Appointments', 'appointments'],
-      ['mdi-file-document-edit-outline', 'Prescriptions', 'prescriptions'],
     ],
   }),
 };

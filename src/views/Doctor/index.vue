@@ -60,7 +60,7 @@
               <v-spacer></v-spacer>
 
               <div v-for="(link, index) in cards" :key="index">
-                <v-card :to="link.to" class="mx-4" max-width="344">
+                <v-card :to="`/doctor/${link.to}`" class="mx-4" max-width="344">
                   <v-img :src="link.img" height="344"></v-img>
 
                   <v-card-title> {{ link.title }} </v-card-title>

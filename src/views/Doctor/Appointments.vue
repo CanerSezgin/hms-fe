@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { getAppointmentsByDoctorIdAndDate } from "@/services/api"
+import { appointmentService } from '@/services/api';
 import AppointmentsTable from '@/components/tables/Appointments';
 export default {
   components: {
@@ -22,11 +22,11 @@ export default {
   },
   data: () => ({
     date: new Date().toISOString().split('T')[0],
-    doctorId: "61c300149ba8c9d06c66bda7",
+    doctorId: '61c300149ba8c9d06c66bda7',
     mockData: {
-      '2021-12-14': [
+      '2022-01-23': [
         {
-          id: "123",
+          id: '123',
           status: true,
           time: '09:00 - 09:30',
           patient: {
@@ -37,7 +37,7 @@ export default {
           },
         },
         {
-          id: "456",
+          id: '456',
           status: true,
           time: '09:30 - 10:00',
           patient: {
@@ -49,7 +49,7 @@ export default {
           },
         },
         {
-          id: "879",
+          id: '879',
           status: true,
           time: '10:00 - 10:30',
           patient: {
@@ -60,7 +60,7 @@ export default {
           },
         },
         {
-          id: "101",
+          id: '101',
           status: false,
           time: '14:00 - 14:30',
           patient: {
@@ -74,7 +74,7 @@ export default {
       ],
       '2021-11-05': [
         {
-          id: "15045",
+          id: '15045',
           status: true,
           time: '14:00 - 14:30',
           patient: {
@@ -85,7 +85,7 @@ export default {
           },
         },
         {
-          id: "777",
+          id: '777',
           status: false,
           time: '15:00 - 15:30',
           patient: {
@@ -98,26 +98,30 @@ export default {
         },
       ],
     },
-    appointmentsData: []
+    appointmentsData: [],
   }),
   computed: {
     appointments() {
-      return this.appointmentsData.map(appointment => ({
+      return this.appointmentsData.map((appointment) => ({
         ...appointment,
         patient: {
           ...appointment.patientId,
-          age: 0
+          age: 0,
         },
-      }))
+      }));
     },
   },
-  async created(){
-    this.appointmentsData = (await getAppointmentsByDoctorIdAndDate(this.doctorId, this.date)).appointments
+  async created() {
+    this.appointmentsData = (
+      await appointmentService.getByDoctorIdAndData(this.doctorId, this.date)
+    ).appointments;
   },
   watch: {
-    async date(val){
-      this.appointmentsData = (await getAppointmentsByDoctorIdAndDate(this.doctorId, this.date)).appointments
-    }
+    async date(val) {
+      this.appointmentsData = (
+        await appointmentService.getByDoctorIdAndData(this.doctorId, this.date)
+      ).appointments;
+    },
   },
 
   methods: {

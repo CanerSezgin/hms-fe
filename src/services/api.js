@@ -6,92 +6,89 @@ const client = axios.create({
   headers: {},
 });
 
-export const getAppointmentById = async (appointmentId) => {
-  const url = `/appointments/${appointmentId}`;
-  const { data } = await client.get(url);
-  return data;
-};
-
-export const getAppointmentsByDoctorIdAndDate = async (doctorId, date) => {
-  const url = `/appointments/search`;
-  const query = {
-    doctorId,
-    date,
-  };
-  const { data } = await client.post(url, query);
-  return data;
-};
-
-export const getAppointmentsByPatientId = async (patientId) => {
-  const url = `/appointments/patients/${patientId}`;
-  const { data } = await client.get(url);
-  return data;
+export const appointmentService = {
+  async getById(appId) {
+    const url = `/appointments/${appId}`;
+    const { data } = await client.get(url);
+    return data;
+  },
+  async getByDoctorIdAndData(doctorId, date) {
+    const url = `/appointments/search`;
+    const query = {
+      doctorId,
+      date,
+    };
+    const { data } = await client.post(url, query);
+    return data;
+  },
+  async getAppointmentsByPatientId(patientId) {
+    const url = `/appointments/patients/${patientId}`;
+    const { data } = await client.get(url);
+    return data;
+  },
+  async createAppointment(doctorId, patientId, date, time){
+    const url = `/appointments`
+    const { data } = await client.post(url, {
+      doctorId,
+      patientId,
+      date,
+      time
+    })
+    return data;
+  }
 };
 
 export const testTypesService = {
-  async get(type){
+  async get(type) {
     const url = `/tests/types/${type}`;
-    const { data: { tests } } = await client.get(url);
+    const {
+      data: { tests },
+    } = await client.get(url);
     return tests;
   },
-  async create(payload){
+  async create(payload) {
     const url = `/tests/types`;
     await client.post(url, payload);
   },
-  async update(payload){
+  async update(payload) {
     const url = `/tests/types`;
     await client.put(url, payload);
   },
-  async delete(id){
+  async delete(id) {
     const url = `/tests/types/${id}`;
     await client.delete(url);
-  }
-}
-
-export const doctorService = {
-  async getAll(){
-    const url = `/admin/doctors`;
-    const { data: { doctors } } = await client.get(url);
-    return doctors;
   },
-  async create(payload) {
-    const url = `/admin/doctors`
-    const { data } = await client.post(url, payload)
-    return data
-  },
-  async delete(userId){
-    const url = `/admin/doctors/${userId}`
-    await client.delete(url)
-  },
-  async update(payload){
-    const { id: userId } = payload;
-    delete payload.id;
-
-    const url = `/admin/doctors/${userId}`
-    await client.put(url, payload)
-  }
-}
+};
 
 export const userService = {
-  async getAll(userType){
+  async getAll(userType) {
     const url = `/admin/staff/${userType}`;
-    const { data: { users } } = await client.get(url);
+    const {
+      data: { users },
+    } = await client.get(url);
     return users;
   },
   async create(payload) {
-    const url = `/admin/staff`
-    const { data } = await client.post(url, payload)
-    return data
+    const url = `/admin/staff`;
+    const { data } = await client.post(url, payload);
+    return data;
   },
-  async delete(userId){
-    const url = `/admin/staff/${userId}`
-    await client.delete(url)
+  async delete(userId) {
+    const url = `/admin/staff/${userId}`;
+    await client.delete(url);
   },
-  async update(payload){
+  async update(payload) {
     const { _id: userId } = payload;
     delete payload.id;
 
-    const url = `/admin/staff/${userId}`
-    await client.put(url, payload)
-  }
-}
+    const url = `/admin/staff/${userId}`;
+    await client.put(url, payload);
+  },
+  async getDoctorsBySpec(specialization) {
+    const url = `/admin/doctor/${specialization}`;
+    const {
+      data: { doctors },
+    } = await client.get(url);
+    return doctors;
+  },
+};

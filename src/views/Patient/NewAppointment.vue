@@ -18,7 +18,7 @@
             label="Select Doctor"
             outlined
             hide-details
-            item-text="name"
+            item-text="fullname"
             :return-object="true"
           >
           </v-select>
@@ -49,7 +49,7 @@
                 </tr>
                 <tr>
                   <td style="width: 65px">Doctor:</td>
-                  <td>{{ doctor.name }}</td>
+                  <td>{{ doctor.fullname }}</td>
                 </tr>
               </table>
             </v-card>
@@ -94,41 +94,18 @@
 </template>
 
 <script>
+import specializations from '@/assets/json/spec.json';
+import { userService, appointmentService } from '@/services/api';
 import timeTable from '@/utils/timeTable';
 export default {
   data: () => ({
     slot: '',
-    specializations: [
-      {
-        id: 'allergist',
-        text: 'Allergist',
-      },
-      {
-        id: 'cardiologist',
-        text: 'Cardiologist',
-      },
-    ],
-    doctorList: {
-      allergist: [
-        {
-          id: 'doc1',
-          name: 'Dr. Ernest Lopez',
-          img: 'https://cdn3.poz.com/24954_Doctor-Patient-iStock-92723315-XLARGE.jpg_67e4ea75-849c-419d-b32b-8970f8ae05a7_x2.jpeg',
-          brief:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis molestiae, enim consectetur architecto sint, non nihil dolorem ipsam harum, porro fugit at nulla sequi! Distinctio a laboriosam sint illo aut.',
-        },
-        {
-          id: 'doc2',
-          name: 'Dr. Tanya Brooks',
-          img: 'https://images.theconversation.com/files/304957/original/file-20191203-66986-im7o5.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop',
-          brief:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis molestiae, enim consectetur architecto sint, non nihil dolorem ipsam harum, porro fugit at nulla sequi! Distinctio a laboriosam sint illo aut.',
-        },
-      ],
-      cardiologist: ['doc3', 'doc4', 'doc5'],
-    },
+    specializations,
     specialization: '',
-    doctor: '',
+    doctors: [],
+    doctor: null,
+    appointments: [],
+    timeTable: null,
 
     dates: [
       new Date().toISOString().split('T')[0],
@@ -296,30 +273,32 @@ export default {
       },
     },
   }),
-  computed: {
-    doctors() {
-      return this.doctorList[this.specialization.id] || [];
-    },
-
-    appointments() {
-      if (!this.doctor) return [];
-      const doctorAppointments = this.mockData[this.doctor.id];
-      const appointmentsByDate = doctorAppointments[this.date] || [];
-      return appointmentsByDate;
-    },
-
-    timeTable() {
-      return timeTable(this.appointments);
-    },
-  },
   watch: {
-    specialization(val) {
-      this.doctor = '';
+    async specialization(spec) {
+      this.doctor = null;
+      if (spec) await this.fetchDoctors(spec);
+    },
+    async doctor(doctor) {
+      if (doctor) await this.fetchAppointmets(doctor, this.date);
+    },
+    async date(date) {
+      if (date) await this.fetchAppointmets(this.doctor, date);
     },
   },
 
   methods: {
     allowedDates: (val) => !['2021-11-06', '2021-11-07'].includes(val),
+    async fetchDoctors(spec) {
+      this.doctors = (await userService.getDoctorsBySpec(spec)) || [];
+      console.log(this.doctors)
+    },
+    async fetchAppointmets(doctor, date) {
+      const { appointments, timeSlots } = await appointmentService.getByDoctorIdAndData(doctor._id, date)
+      console.log({ appointments, timeSlots })
+      this.appointments = appointments
+      this.timeTable = timeTable(appointments, timeSlots)
+      console.log("TT", this.timeTable)
+    },
   },
 };
 </script>
