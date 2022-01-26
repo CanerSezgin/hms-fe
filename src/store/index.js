@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { authService } from '@/services/api';
+import router from '../router';
 
 Vue.use(Vuex);
 
@@ -16,9 +17,12 @@ export default new Vuex.Store({
       : null,
   },
   getters: {
-    isAuth(state){
-      return !!state.token && !!state.user
-    }
+    isAuth(state) {
+      return !!state.token && !!state.user;
+    },
+    userType(state) {
+      return state.user ? state.user.userType : null;
+    },
   },
   mutations: {
     LOGIN(state, data) {
@@ -35,12 +39,14 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async login({ commit }, form) {
+    async login({ commit, getters }, form) {
       const data = await authService.signin(form);
       commit('LOGIN', data);
+      router.push(`/${getters.userType}`);
     },
     logout({ commit }) {
       commit('LOGOUT');
+      router.push('/');
     },
   },
 });

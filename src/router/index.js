@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import store from '../store';
 
 // Admin Routes
 import Admin from '../views/Admin';
@@ -10,8 +11,8 @@ import LabSpec from '../views/Admin/Users/LabSpec.vue';
 import AdminPatient from '../views/Admin/Users/Patient.vue';
 import Appointments from '../views/Admin/Appointments.vue';
 import Prescriptions from '../views/Admin/Prescriptions.vue';
-import AdminAnalysis from "../views/Admin/Analysis.vue"
-import Imaging from "../views/Admin/Imaging.vue"
+import AdminAnalysis from '../views/Admin/Analysis.vue';
+import Imaging from '../views/Admin/Imaging.vue';
 
 // Doctor Routes
 import Doctor from '../views/Doctor';
@@ -33,11 +34,17 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      requiresGuest: true,
+    },
   },
   {
     path: '/admin',
     name: 'Admin',
     component: Admin,
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: 'doctors',
@@ -85,6 +92,9 @@ const routes = [
     path: '/doctor',
     name: 'Doctor',
     component: Doctor,
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: 'appointments',
@@ -107,6 +117,9 @@ const routes = [
     path: '/patient',
     name: 'Patient',
     component: Patient,
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: 'appointments',
@@ -146,6 +159,46 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const { isAuth, userType } = store.getters;
+  console.log('before each', { to: to.fullPath, isAuth, userType });
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    console.log('requires auth');
+
+    if (!isAuth) {
+      return next({
+        path: '/',
+        query: {
+          redirect: to.fullPath,
+        },
+      });
+    } else {
+      if (to.fullPath.includes(`/${userType}`)) {
+        return next();
+      }
+
+      return next({
+        path: `${userType}/`,
+        query: { redirect: to.fullPath },
+      });
+    }
+  }
+
+  if (to.matched.some((record) => record.meta.requiresGuest)) {
+    if (isAuth) {
+      return next({
+        path: `${userType}/`,
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      return next();
+    }
+  }
+
+  return next();
 });
 
 export default router;
