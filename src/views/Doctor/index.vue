@@ -1,17 +1,7 @@
 <template>
   <div>
     <v-navigation-drawer v-model="drawer" app>
-      <v-sheet color="grey lighten-4" class="pa-4 text-center">
-        <v-avatar class="mb-4" color="grey darken-1" size="64">
-          <img
-            src="https://media-exp1.licdn.com/dms/image/C4D03AQHmzeFr51sTDw/profile-displayphoto-shrink_100_100/0/1620590863176?e=1641427200&v=beta&t=kpWio5Mw0wByXmCLaU9J1tRF7-0Ba5YVn6zfHy4H5JQ"
-            alt="John"
-          />
-        </v-avatar>
-
-        <div>Caner Sezgin</div>
-        <div>caner@sezgin.com</div>
-      </v-sheet>
+      <UserInfo />
 
       <v-divider></v-divider>
 
@@ -82,7 +72,9 @@
 </template>
 
 <script>
+import UserInfo from '@/components/menu/UserInfo';
 export default {
+  components: { UserInfo },
   computed: {
     isHomepage() {
       return this.$route.name === 'Doctor';

@@ -23,6 +23,9 @@ export default new Vuex.Store({
     userType(state) {
       return state.user ? state.user.userType : null;
     },
+    userId(state){
+      return state.user ? state.user._id : null
+    }
   },
   mutations: {
     LOGIN(state, data) {

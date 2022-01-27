@@ -1,51 +1,61 @@
 <template>
-  <v-form ref="loginForm" v-model="isFormValid" lazy-validation>
-    <v-row class="mt-10">
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.email"
-          @keypress="handleKeyPress"
-          :rules="validationRules.email"
-          label="E-mail"
-          required
-          outlined
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="form.password"
-          @click:append="showPassword = !showPassword"
-          @keypress="handleKeyPress"
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="validationRules.password"
-          :type="showPassword ? 'text' : 'password'"
-          name="input-10-1"
-          label="Password"
-          hint="At least 8 characters"
-          counter
-          outlined
-          required
-        ></v-text-field>
-      </v-col>
-      <v-col class="d-flex" cols="12" sm="6" xsm="12"> </v-col>
-      <v-spacer></v-spacer>
-      <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-        <v-btn
-          x-large
-          block
-          :disabled="!isFormValid"
-          color="primary"
-          @click="submit"
-        >
-          Login
-        </v-btn>
-      </v-col>
-    </v-row>
+  <div>
+    <v-form ref="loginForm" v-model="isFormValid" lazy-validation>
+      <v-row class="mt-10">
+        <v-col cols="12">
+          <v-text-field
+            v-model="form.email"
+            @keypress="handleKeyPress"
+            :rules="validationRules.email"
+            label="E-mail"
+            required
+            outlined
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-text-field
+            v-model="form.password"
+            @click:append="showPassword = !showPassword"
+            @keypress="handleKeyPress"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="validationRules.password"
+            :type="showPassword ? 'text' : 'password'"
+            name="input-10-1"
+            label="Password"
+            hint="At least 8 characters"
+            counter
+            outlined
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col class="d-flex" cols="12" sm="6" xsm="12"> </v-col>
+        <v-spacer></v-spacer>
+        <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
+          <v-btn
+            x-large
+            block
+            :disabled="!isFormValid"
+            color="primary"
+            @click="submit"
+          >
+            Login
+          </v-btn>
+        </v-col>
+      </v-row>
 
-    <v-alert class="mt-7" v-if="error" color="error" dark>
-      {{ error }}
-    </v-alert>
-  </v-form>
+      <div style="height: 100px">
+        <v-alert class="mt-7" v-if="error" color="error" dark>
+          {{ error }}
+        </v-alert>
+      </div>
+    </v-form>
+
+    <div v-if="testMode">
+      <v-btn small @click="setMockData('admin')">Admin Credentials</v-btn>
+      <v-btn small @click="setMockData('doctor')">Doctor Credentials</v-btn>
+      <v-btn small @click="setMockData('patient')">Patient Credentials</v-btn>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -53,14 +63,21 @@ import { mapActions } from 'vuex';
 
 class LoginForm {
   constructor() {
-    this.email = 'test@patient.com';
-    this.password = '12345678';
+    this.email = '';
+    this.password = '';
   }
 }
+
+const mock = {
+  admin: { email: 'admin@test.com', password: '12345678' },
+  doctor: { email: 'doctor@test.com', password: '12345678' },
+  patient: { email: 'patient@test.com', password: '12345678' },
+};
 
 export default {
   data() {
     return {
+      testMode: true,
       form: new LoginForm(),
       validationRules: {
         email: [
@@ -95,6 +112,9 @@ export default {
           this.error = msg;
         }
       }
+    },
+    setMockData(userType) {
+      this.form = mock[userType];
     },
   },
 };

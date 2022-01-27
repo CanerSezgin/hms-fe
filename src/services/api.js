@@ -39,7 +39,7 @@ export const appointmentService = {
     const { data } = await client.get(url);
     return data;
   },
-  async createAppointment(doctorId, patientId, date, time){
+  async createAppointment({ doctorId, patientId, date, time }){
     const url = `/appointments`
     const { data } = await client.post(url, {
       doctorId,

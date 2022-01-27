@@ -5,7 +5,7 @@
         <v-toolbar elevation="0">
           <div class="title">Login</div>
           <v-spacer></v-spacer>
-          <v-btn icon @click="closeDialog"><v-icon>mdi-close</v-icon></v-btn>
+          <v-btn icon><v-icon>mdi-close</v-icon></v-btn>
         </v-toolbar>
         <LoginForm />
       </v-card>

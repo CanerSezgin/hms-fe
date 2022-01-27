@@ -3,7 +3,7 @@
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <div style="font-size: 1.3rem; font-weight: 500">
-          Hospital Management System ({{ isAuth }})
+          Hospital Management System
         </div>
       </div>
 
@@ -29,7 +29,7 @@ export default {
     ...mapGetters(['isAuth']),
   },
   methods: {
-    ...mapActions(["logout"])
+    ...mapActions(['logout']),
   },
 };
 </script>
