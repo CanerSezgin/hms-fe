@@ -27,16 +27,12 @@ export const appointmentService = {
   },
   async getByDoctorIdAndData(doctorId, date) {
     const url = `/appointments/search`;
-    const query = {
+    const payload = {
       doctorId,
       date,
     };
-    const { data } = await client.post(url, query);
-    return data;
-  },
-  async getAppointmentsByPatientId(patientId) {
-    const url = `/appointments/patients/${patientId}`;
-    const { data } = await client.get(url);
+    console.log('getByDoctorIdAndData', payload)
+    const { data } = await client.post(url, payload);
     return data;
   },
   async createAppointment({ doctorId, patientId, date, time }){

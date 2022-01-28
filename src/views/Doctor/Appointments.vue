@@ -1,131 +1,21 @@
 <template>
   <div>
-    <template>
-      <v-row justify="center">
-        <v-col cols="12" md="8">
-          <AppointmentsTable :appointments="appointments" />
-        </v-col>
-        <v-col cols="12" md="4">
-          <v-date-picker v-model="date" class="mt-4"></v-date-picker>
-        </v-col>
-      </v-row>
-    </template>
+    <AppointmentsCtrl :doctorId="doctorId" />
   </div>
 </template>
 
 <script>
-import { appointmentService } from '@/services/api';
-import AppointmentsTable from '@/components/tables/Appointments';
+import { mapState } from 'vuex';
+import AppointmentsCtrl from '@/components/tables/AppointmentsCtrl';
 export default {
   components: {
-    AppointmentsTable,
+    AppointmentsCtrl,
   },
-  data: () => ({
-    date: new Date().toISOString().split('T')[0],
-    doctorId: '61c300149ba8c9d06c66bda7',
-    mockData: {
-      '2022-01-23': [
-        {
-          id: '123',
-          status: true,
-          time: '09:00 - 09:30',
-          patient: {
-            name: 'Jane Doe',
-            gender: 'f',
-            phone: 5126578565,
-            age: '38',
-          },
-        },
-        {
-          id: '456',
-          status: true,
-          time: '09:30 - 10:00',
-          patient: {
-            name: 'John Doe',
-            gender: 'm',
-            email: 'john.doe@mail.com',
-            phone: 5786523564,
-            age: '16',
-          },
-        },
-        {
-          id: '879',
-          status: true,
-          time: '10:00 - 10:30',
-          patient: {
-            name: 'Mary Jane',
-            gender: 'f',
-            email: 'mary.jane@mail.com',
-            age: '21',
-          },
-        },
-        {
-          id: '101',
-          status: false,
-          time: '14:00 - 14:30',
-          patient: {
-            name: 'William Jones',
-            gender: 'm',
-            email: 'william.jones@mail.com',
-            phone: 5972648835,
-            age: '22',
-          },
-        },
-      ],
-      '2021-11-05': [
-        {
-          id: '15045',
-          status: true,
-          time: '14:00 - 14:30',
-          patient: {
-            name: 'Mary Jane',
-            gender: 'f',
-            email: 'mary.jane@mail.com',
-            age: '21',
-          },
-        },
-        {
-          id: '777',
-          status: false,
-          time: '15:00 - 15:30',
-          patient: {
-            name: 'William Jones',
-            gender: 'm',
-            email: 'william.jones@mail.com',
-            phone: 5972648835,
-            age: '22',
-          },
-        },
-      ],
-    },
-    appointmentsData: [],
-  }),
   computed: {
-    appointments() {
-      return this.appointmentsData.map((appointment) => ({
-        ...appointment,
-        patient: {
-          ...appointment.patientId,
-          age: 0,
-        },
-      }));
-    },
-  },
-  async created() {
-    this.appointmentsData = (
-      await appointmentService.getByDoctorIdAndData(this.doctorId, this.date)
-    ).appointments;
-  },
-  watch: {
-    async date(val) {
-      this.appointmentsData = (
-        await appointmentService.getByDoctorIdAndData(this.doctorId, this.date)
-      ).appointments;
-    },
-  },
-
-  methods: {
-    allowedDates: (val) => !['2021-11-06', '2021-11-07'].includes(val),
+    ...mapState(['user']),
+    doctorId(){
+      return this.user && this.user.doctorId
+    }
   },
 };
 </script>

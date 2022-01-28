@@ -188,7 +188,7 @@ export default {
         time: this.slot,
       };
       console.log(payload, 'creating appointment');
-      // await appointmentService.createAppointment(payload);
+      await appointmentService.createAppointment(payload);
       this.isAppSuccesfullyCreated = true;
     },
   },

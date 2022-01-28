@@ -50,16 +50,19 @@
       </div>
     </v-form>
 
-    <div v-if="testMode">
-      <v-btn small @click="setMockData('admin')">Admin Credentials</v-btn>
-      <v-btn small @click="setMockData('doctor')">Doctor Credentials</v-btn>
-      <v-btn small @click="setMockData('patient')">Patient Credentials</v-btn>
+    <div v-if="testMode" style="position: fixed; bottom: 0; right: 0">
+      <div class="text-right">Test Mode Active</div>
+      <div>
+        <v-btn small @click="setMockData('admin')">Admin Credentials</v-btn>
+        <v-btn small @click="setMockData('doctor')">Doctor Credentials</v-btn>
+        <v-btn small @click="setMockData('patient')">Patient Credentials</v-btn>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 class LoginForm {
   constructor() {
@@ -75,9 +78,11 @@ const mock = {
 };
 
 export default {
+  computed: {
+    ...mapState(['testMode'])
+  },
   data() {
     return {
-      testMode: true,
       form: new LoginForm(),
       validationRules: {
         email: [

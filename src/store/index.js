@@ -11,6 +11,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    testMode: true,
     token: localStorage.getItem('hms-token') || null,
     user: localStorage.getItem('hms-user')
       ? JSON.parse(localStorage.getItem('hms-user'))
