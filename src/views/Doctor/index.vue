@@ -35,13 +35,11 @@
               <v-list-item three-line>
                 <v-list-item-content>
                   <v-list-item-title class="text-h5 mb-1">
-                    Caner Sezgin
+                    {{ user.name }} {{ user.surname }}
                   </v-list-item-title>
-                  <div class="text-overline">Allergy</div>
+                  <div class="text-overline">{{ user.specialization }}</div>
 
-                  <v-list-item-subtitle
-                    >ccanersezgin@gmail.com</v-list-item-subtitle
-                  >
+                  <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-card>
@@ -72,10 +70,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import UserInfo from '@/components/menu/UserInfo';
 export default {
   components: { UserInfo },
   computed: {
+    ...mapState(['user']),
     isHomepage() {
       return this.$route.name === 'Doctor';
     },
@@ -93,13 +93,6 @@ export default {
         to: 'appointments',
         img: require('@/assets/img/appointments.png'),
         subtitle: 'Click to see the appointments assigned to you.',
-      },
-      {
-        icon: 'mdi-file-document-edit-outline',
-        title: 'Prescriptions',
-        to: 'prescriptions',
-        img: require('@/assets/img/prescriptions.jpg'),
-        subtitle: 'Click to see the prescriptions you wrote.',
       },
     ],
   }),

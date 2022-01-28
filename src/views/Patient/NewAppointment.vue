@@ -174,7 +174,7 @@ export default {
     },
     async fetchAppointmets(doctor, date) {
       const { appointments, timeSlots } =
-        await appointmentService.getByDoctorIdAndData(doctor._id, date);
+        await appointmentService.getByDoctorIdAndDate(doctor._id, date);
       console.log({ appointments, timeSlots });
       this.appointments = appointments;
       this.timeTable = timeTable(appointments, timeSlots);

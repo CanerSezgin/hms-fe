@@ -19,6 +19,10 @@ Vue.filter('capitalize', function (val) {
   return val.charAt(0).toUpperCase() + val.slice(1);
 });
 
+Vue.filter('formatDate', function (val) {
+  return new Date(val).toISOString().split('T')[0];
+});
+
 new Vue({
   router,
   store,

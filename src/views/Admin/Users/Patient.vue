@@ -20,7 +20,10 @@ export default {
       title: 'Patient',
       defaultForm: {},
       dynamicHeaders: [
+        { text: 'Gender', value: 'gender' },
+        { text: 'Age', value: 'age' },
         { text: 'Email', value: 'email' },
+        { text: 'Phone', value: 'phone' },
       ],
       isReadOnly: true,
     };

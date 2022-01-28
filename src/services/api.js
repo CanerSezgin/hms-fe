@@ -7,17 +7,17 @@ const client = axios.create({
 });
 
 export const authService = {
-  async signin(form){
-    const url = `/auth/signin`
-    const { data } = await client.post(url, form)
-    return data
+  async signin(form) {
+    const url = `/auth/signin`;
+    const { data } = await client.post(url, form);
+    return data;
   },
-  async register(form){
-    const url = `/auth/register`
-    const { data } = await client.post(url, form)
-    return data
-  }
-}
+  async register(form) {
+    const url = `/auth/register`;
+    const { data } = await client.post(url, form);
+    return data;
+  },
+};
 
 export const appointmentService = {
   async getById(appId) {
@@ -25,26 +25,53 @@ export const appointmentService = {
     const { data } = await client.get(url);
     return data;
   },
-  async getByDoctorIdAndData(doctorId, date) {
+  async getByDoctorIdAndDate(doctorId, date) {
     const url = `/appointments/search`;
     const payload = {
       doctorId,
       date,
     };
-    console.log('getByDoctorIdAndData', payload)
+    console.log('getByDoctorIdAndDate', payload);
     const { data } = await client.post(url, payload);
     return data;
   },
-  async createAppointment({ doctorId, patientId, date, time }){
-    const url = `/appointments`
+  async getByPatientId(patientId, status, pagination = { page: 1, limit: 12 }) {
+    const url = `/appointments/search`;
+    const payload = {
+      patientId,
+      status,
+      populateDoctor: true,
+      ...pagination,
+    };
+    console.log('getByPatientId', payload);
+    const {
+      data: { appointments },
+    } = await client.post(url, payload);
+    return (appointments || []).sort((a, b) => {
+      const timeASplitter = a.time.split('-')[0].split(':');
+      const timeA = parseInt(`${timeASplitter[0]}${timeASplitter[1]}`);
+
+      const timeBSplitter = b.time.split('-')[0].split(':');
+      const timeB = parseInt(`${timeBSplitter[0]}${timeBSplitter[1]}`);
+
+      const dateWithTimeA = new Date(a.date).getTime() + timeA;
+      const dateWithTimeB = new Date(b.date).getTime() + timeB;
+      console.log({ timeA, timeB, dateWithTimeA, dateWithTimeB });
+      return dateWithTimeA - dateWithTimeB;
+    });
+  },
+  async createAppointment({ doctorId, patientId, date, time }) {
+    console.log({ doctorId, patientId, date, time });
+
+    const url = `/appointments`;
     const { data } = await client.post(url, {
       doctorId,
       patientId,
       date,
-      time
-    })
+      time,
+    });
     return data;
-  }
+  },
 };
 
 export const testTypesService = {

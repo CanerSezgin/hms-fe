@@ -52,7 +52,7 @@ export default {
   methods: {
     async setData() {
       const { appointments, timeSlots } =
-        await appointmentService.getByDoctorIdAndData(this.doctorId, this.date);
+        await appointmentService.getByDoctorIdAndDate(this.doctorId, this.date);
       this.appointmentsData = appointments;
       this.timeSlots = timeSlots;
       console.log(this.appointmentsData);

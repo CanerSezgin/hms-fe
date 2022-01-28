@@ -1,15 +1,15 @@
 <template>
   <div>
-    <AppointmentsCtrl :doctorId="doctorId" />
+    <AppointmentsDrCtrl :doctorId="doctorId" />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import AppointmentsCtrl from '@/components/tables/AppointmentsCtrl';
+import AppointmentsDrCtrl from '@/components/tables/AppointmentsDrCtrl';
 export default {
   components: {
-    AppointmentsCtrl,
+    AppointmentsDrCtrl,
   },
   computed: {
     ...mapState(['user']),

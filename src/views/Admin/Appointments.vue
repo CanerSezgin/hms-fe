@@ -11,7 +11,7 @@
 
     <v-row>
       <v-col cols="12">
-        <AppointmentsCtrl
+        <AppointmentsDrCtrl
           v-if="doctorId"
           :doctorId="doctorId"
           :key="doctorId"
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import AppointmentsCtrl from '@/components/tables/AppointmentsCtrl';
+import AppointmentsDrCtrl from '@/components/tables/AppointmentsDrCtrl';
 import SelectDoctor from '@/components/selectors/SelectDoctor';
 export default {
   components: {
-    AppointmentsCtrl,
+    AppointmentsDrCtrl,
     SelectDoctor,
   },
   data() {
