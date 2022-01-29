@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title">{{isDone ? 'Old' : 'New'}} Appointments</div>
+    <div class="title">{{title}}</div>
     <v-data-table :headers="headers" :items="appointments" hide-default-footer>
       <template v-slot:[`item.date`]="{ item }">
         {{ item.date | formatDate }} <span class="ml-2">({{ item.time }})</span>
@@ -24,6 +24,7 @@
 <script>
 export default {
   props: {
+    title: { type: String },
     appointments: { type: Array, required: true },
     isDone: { type: Boolean, required: true },
   },
@@ -46,7 +47,7 @@ export default {
       doneHeaders: [
         { text: 'Prescription', value: 'prescription', sortable: false },
         { text: 'Diagnosis', value: 'diagnosis', sortable: false },
-        { text: 'Analysis / Imaging Results', value: 'analysis' },
+        { text: 'Analysis / Imaging Results', value: 'analysis', sortable: false },
       ],
       pendingHeaders: [{ text: 'Actions', value: 'actions', sortable: false }],
     };

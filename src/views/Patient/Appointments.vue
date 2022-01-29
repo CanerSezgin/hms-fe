@@ -6,12 +6,14 @@
     >
     <div class="mt-7">
       <AppointmentsPatientTable
+        title="Old Appointments"
         class="mt-5"
         :appointments="pendingAppointments"
         :isDone="false"
       />
 
       <AppointmentsPatientTable
+        title="New Appointments"
         class="mt-12"
         :appointments="doneAppointments"
         :isDone="true"

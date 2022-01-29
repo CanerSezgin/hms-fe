@@ -22,8 +22,10 @@ export const authService = {
 export const appointmentService = {
   async getById(appId) {
     const url = `/appointments/${appId}`;
-    const { data } = await client.get(url);
-    return data;
+    const {
+      data: { appointment },
+    } = await client.get(url);
+    return appointment;
   },
   async getByDoctorIdAndDate(doctorId, date) {
     const url = `/appointments/search`;
@@ -71,6 +73,19 @@ export const appointmentService = {
       time,
     });
     return data;
+  },
+  async requestTest({ appointmentId, doctorId, patientId, testTypeId }) {
+    const url = '/tests';
+    const payload = {
+      appointmentId,
+      doctorId,
+      patientId,
+      testTypeId,
+    };
+
+    console.log("requesting test", payload)
+    const { data } = await client.post(url, payload);
+    return data
   },
 };
 

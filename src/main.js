@@ -23,6 +23,24 @@ Vue.filter('formatDate', function (val) {
   return new Date(val).toISOString().split('T')[0];
 });
 
+Vue.filter('formatDateFull', function (val) {
+  const [date, time] = new Date(val).toISOString().split('T');
+  return `${date} at ${time.replace('Z', '')}`;
+});
+
+Vue.filter('formatGender', function (val) {
+  switch (val) {
+    case 'f':
+      return 'Female';
+
+    case 'm':
+      return 'Male';
+
+    default:
+      return val;
+  }
+});
+
 new Vue({
   router,
   store,
