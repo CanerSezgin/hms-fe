@@ -87,6 +87,11 @@ export const appointmentService = {
     const { data } = await client.post(url, payload);
     return data
   },
+  async updateAppointment(id, payload){
+    const url = `/appointments/${id}`
+    const { data }  = await client.patch(url, payload)
+    return data
+  }
 };
 
 export const testTypesService = {

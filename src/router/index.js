@@ -10,6 +10,7 @@ import Receptionist from '../views/Admin/Users/Receptionist.vue';
 import LabSpec from '../views/Admin/Users/LabSpec.vue';
 import AdminPatient from '../views/Admin/Users/Patient.vue';
 import Appointments from '../views/Admin/Appointments.vue';
+import AdminAppointment from '../views/Admin/Appointment.vue';
 import Prescriptions from '../views/Admin/Prescriptions.vue';
 import AdminAnalysis from '../views/Admin/Analysis.vue';
 import Imaging from '../views/Admin/Imaging.vue';
@@ -80,6 +81,11 @@ const routes = [
         path: 'appointments',
         name: 'Appointments',
         component: Appointments,
+      },
+      {
+        path: 'appointment/:appointmentId',
+        name: 'AdminAppointment',
+        component: AdminAppointment
       },
       {
         path: 'prescriptions',

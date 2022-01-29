@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-btn @click="openDialog" class="mx-1" color="primary" outlined>{{
+    <v-btn @click="openDialog" class="mx-1" color="primary" outlined :disabled="disabled">{{
       title
     }}</v-btn>
     <v-dialog v-model="dialog" max-width="600" persistent>
@@ -34,6 +34,7 @@ export default {
     appointmentId: { type: String, required: true },
     doctorId: { type: String, required: true },
     patientId: { type: String, required: true },
+    disabled: { type: Boolean, default: false }
   },
   data() {
     return {
