@@ -56,6 +56,8 @@
         <v-btn small @click="setMockData('admin')">Admin Credentials</v-btn>
         <v-btn small @click="setMockData('doctor')">Doctor Credentials</v-btn>
         <v-btn small @click="setMockData('patient')">Patient Credentials</v-btn>
+        <v-btn small @click="setMockData('lab')">Lab Spec Credentials</v-btn>
+        <v-btn small @click="setMockData('receptionist')">Receptionist Credentials</v-btn>
       </div>
     </div>
   </div>
@@ -75,6 +77,8 @@ const mock = {
   admin: { email: 'admin@test.com', password: '12345678' },
   doctor: { email: 'doctor@test.com', password: '12345678' },
   patient: { email: 'patient@test.com', password: '12345678' },
+  lab: { email: 'lab@test.com', password: '12345678'},
+  receptionist: { email: 'receptionist@test.com', password: '12345678'}
 };
 
 export default {

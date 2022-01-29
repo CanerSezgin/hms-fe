@@ -4,38 +4,14 @@
       <Loader />
     </div>
 
-    <!-- date
-    doctor 
-    specialization
-    test name
-    result -->
-
     <div v-else>
-      <v-row>
-        <v-col cols="10" offset="1">
-          <div class="title mb-5">Analysis List</div>
-          <v-data-table
-            :headers="headers"
-            :items="tests"
-            :items-per-page="10"
-            class="elevation-1"
-          >
-            <template v-slot:[`item.requestedAt`]="{ item }">
-              {{ item.requestedAt | formatDateFull }}
-            </template>
-
-            <template v-slot:[`item.status`]="{ item }">
-              {{ item.status | capitalize }}
-            </template>
-
-            <template v-slot:[`item.doctorId`]="{ item }">
-              {{ item.doctorId.name }} {{ item.doctorId.surname }}
-            </template>
-
-
-          </v-data-table>
-        </v-col>
-      </v-row>
+      <TestsTable
+        class="mt-5"
+        title="Imaging List"
+        :tests="tests"
+        @submitted="setData"
+        :isResultReadOnly="true"
+      />
     </div>
   </div>
 </template>
@@ -44,8 +20,9 @@
 import { mapGetters } from 'vuex';
 import { appointmentService } from '@/services/api';
 import Loader from '@/components/elements/Loader';
+import TestsTable from '@/components/tables/Tests';
 export default {
-  components: { Loader },
+  components: { Loader, TestsTable },
   computed: {
     ...mapGetters(['userId']),
   },
@@ -53,13 +30,6 @@ export default {
     return {
       isLoading: true,
       tests: [],
-      headers: [
-        { text: 'Date', value: 'requestedAt' },
-        { text: 'Status', value: 'status' },
-        { text: 'Doctor', value: 'doctorId' },
-        { text: 'Test', value: 'testTypeId.name' },
-        { text: 'Result', value: 'testTypeId.result' },
-      ],
     };
   },
   async created() {
@@ -68,8 +38,9 @@ export default {
   },
   methods: {
     async setData() {
-      this.tests = (await appointmentService.getTestsByPatientId(this.userId)).analysis
-      console.log(this.tests)
+      this.tests = (
+        await appointmentService.getTestsByPatientId(this.userId)
+      ).analysis;
     },
   },
 };

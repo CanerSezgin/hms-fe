@@ -6,7 +6,7 @@ import store from '../store';
 // Admin Routes
 import Admin from '../views/Admin';
 import Doctors from '../views/Admin/Users/Doctors.vue';
-import Receptionist from '../views/Admin/Users/Receptionist.vue';
+import AdminReceptionist from '../views/Admin/Users/Receptionist.vue';
 import LabSpec from '../views/Admin/Users/LabSpec.vue';
 import AdminPatient from '../views/Admin/Users/Patient.vue';
 import Appointments from '../views/Admin/Appointments.vue';
@@ -27,7 +27,13 @@ import NewAppointment from '../views/Patient/NewAppointment.vue';
 import Diseases from '../views/Patient/Diseases.vue';
 import PatientImaging from '../views/Patient/Imaging.vue';
 import Analysis from '../views/Patient/Analysis.vue';
-import PatientPrescriptions from "../views/Patient/Prescriptions.vue"
+import PatientPrescriptions from '../views/Patient/Prescriptions.vue';
+
+// Lab Routes
+import Lab from '../views/Lab';
+
+// Receptionist Routes
+import Receptionist from '../views/Receptionist';
 
 Vue.use(VueRouter);
 
@@ -55,8 +61,8 @@ const routes = [
       },
       {
         path: 'receptionist',
-        name: 'Receptionist',
-        component: Receptionist,
+        name: 'AdminReceptionist',
+        component: AdminReceptionist,
       },
       {
         path: 'lab-spec',
@@ -86,7 +92,7 @@ const routes = [
       {
         path: 'appointment/:appointmentId',
         name: 'AdminAppointment',
-        component: AdminAppointment
+        component: AdminAppointment,
       },
       {
         path: 'prescriptions',
@@ -159,6 +165,22 @@ const routes = [
         component: Analysis,
       },
     ],
+  },
+  {
+    path: '/lab',
+    name: 'Lab',
+    component: Lab,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/receptionist',
+    name: 'Receptionist',
+    component: Receptionist,
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 

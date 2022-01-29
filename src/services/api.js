@@ -115,7 +115,17 @@ export const appointmentService = {
     const url = `/tests/patients/${patientId}`
     const { data: {tests} } = await client.get(url)
     return tests
+  },
+  async getPendingTests(patientId){
+    const url = `/tests/pending`
+    const { data: {tests} } = await client.get(url)
+    return tests
+  },
+  async uploadTestResult(testId, result){
+    const url = `/tests/result/${testId}`
+    await client.post(url, { result })
   }
+
 };
 
 export const testTypesService = {
