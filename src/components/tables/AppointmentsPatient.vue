@@ -1,17 +1,35 @@
 <template>
   <div>
-    <div class="title">{{title}}</div>
+    <div class="title">{{ title }}</div>
     <v-data-table :headers="headers" :items="appointments" hide-default-footer>
       <template v-slot:[`item.date`]="{ item }">
         {{ item.date | formatDate }} <span class="ml-2">({{ item.time }})</span>
       </template>
 
       <template v-slot:[`item.doctorId`]="{ item }">
-        {{item.doctorId.name}} {{ item.doctorId.surname }}
+        {{ item.doctorId.name }} {{ item.doctorId.surname }}
       </template>
 
       <template v-slot:[`item.speciality`]="{ item }">
-        {{item.doctorId.specialization}}
+        {{ item.doctorId.specialization }}
+      </template>
+
+      <template v-slot:[`item.prescription`]="{ item }">
+        {{ item.prescription ? item.prescription.description : '' }}
+      </template>
+
+      <template v-slot:[`item.tests`]="{ item }">
+        <div>
+          <div
+            v-for="analysis in [
+              ...(item.tests.analysis || []),
+              ...(item.tests.imaging || []),
+            ]"
+            :key="analysis._id"
+          >
+            {{ analysis.testTypeId.name }}
+          </div>
+        </div>
       </template>
 
       <template v-slot:[`item.actions`]>
@@ -46,8 +64,9 @@ export default {
       ],
       doneHeaders: [
         { text: 'Prescription', value: 'prescription', sortable: false },
-        { text: 'Diagnosis', value: 'diagnosis', sortable: false },
-        { text: 'Analysis / Imaging Results', value: 'analysis', sortable: false },
+        { text: 'Diagnosis', value: 'diagnose', sortable: false },
+
+        { text: 'Analysis / Imaging Results', value: 'tests', sortable: false },
       ],
       pendingHeaders: [{ text: 'Actions', value: 'actions', sortable: false }],
     };

@@ -42,13 +42,15 @@ export const appointmentService = {
     const payload = {
       patientId,
       status,
-      populateDoctor: true,
+      populate: true,
       ...pagination,
     };
     console.log('getByPatientId', payload);
     const {
       data: { appointments },
     } = await client.post(url, payload);
+
+    console.log(appointments)
     return (appointments || []).sort((a, b) => {
       const timeASplitter = a.time.split('-')[0].split(':');
       const timeA = parseInt(`${timeASplitter[0]}${timeASplitter[1]}`);
@@ -74,6 +76,11 @@ export const appointmentService = {
     });
     return data;
   },
+  async updateAppointment(id, payload) {
+    const url = `/appointments/${id}`;
+    const { data } = await client.patch(url, payload);
+    return data;
+  },
   async requestTest({ appointmentId, doctorId, patientId, testTypeId }) {
     const url = '/tests';
     const payload = {
@@ -83,14 +90,31 @@ export const appointmentService = {
       testTypeId,
     };
 
-    console.log("requesting test", payload)
+    console.log('requesting test', payload);
     const { data } = await client.post(url, payload);
-    return data
+    return data;
   },
-  async updateAppointment(id, payload){
-    const url = `/appointments/${id}`
-    const { data }  = await client.patch(url, payload)
-    return data
+  async prescribe({ appointmentId, doctorId, patientId, description }) {
+    const url = `/appointments/${appointmentId}/prescribe`;
+    const payload = {
+      doctorId,
+      patientId,
+      description,
+    };
+
+    console.log('creating prescription', payload);
+    const { data } = await client.post(url, payload);
+    return data;
+  },
+  async getPrescriptionsByPatientId(patientId){
+    const url = `/appointments/prescriptions/${patientId}`
+    const { data: { prescriptions } } = await client.get(url)
+    return prescriptions
+  },
+  async getTestsByPatientId(patientId){
+    const url = `/tests/patients/${patientId}`
+    const { data: {tests} } = await client.get(url)
+    return tests
   }
 };
 

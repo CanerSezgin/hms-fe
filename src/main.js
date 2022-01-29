@@ -25,7 +25,7 @@ Vue.filter('formatDate', function (val) {
 
 Vue.filter('formatDateFull', function (val) {
   const [date, time] = new Date(val).toISOString().split('T');
-  return `${date} at ${time.replace('Z', '')}`;
+  return `${date} at ${(time.split('.'))[0]}`;
 });
 
 Vue.filter('formatGender', function (val) {

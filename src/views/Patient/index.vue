@@ -115,7 +115,7 @@ export default {
       ['mdi-map-marker-outline', 'Appointments', 'appointments'],
       ['mdi-pill', 'Prescriptions', 'prescriptions'],
       ['mdi-emoticon-sick-outline', 'Diseases', 'diseases'],
-      ['mdi-file-document-edit-outline', 'Reports', 'reports'],
+      ['mdi-file-document-edit-outline', 'Imaging', 'imaging'],
       ['mdi-needle', 'Analysis', 'analysis'],
     ],
   }),

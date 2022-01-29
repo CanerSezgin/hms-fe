@@ -1,9 +1,10 @@
 <template>
-  <div v-if="isLoaded">
-    {{ disabled }}
-    <v-row>
+  <div>
+    <Loader v-if="isLoading" />
+
+    <v-row v-else>
       <v-col cols="7">
-        <v-card>
+        <v-card outlined>
           <v-card color="primary" dark class="px-5 pa-2"
             >Appointment Information</v-card
           >
@@ -19,7 +20,7 @@
           </v-card-text>
         </v-card>
 
-        <v-card class="mt-5">
+        <v-card class="mt-5" outlined>
           <v-card color="primary" dark class="px-5 pa-2"
             >Patient Information</v-card
           >
@@ -52,7 +53,7 @@
           </v-card-text>
         </v-card>
 
-        <v-card class="mt-5">
+        <v-card class="mt-5" outlined>
           <v-card color="primary" dark class="px-5 pa-2"
             >Patient History</v-card
           >
@@ -79,7 +80,7 @@
           :disabled="disabled"
         ></v-textarea>
 
-        <div class="my-5">
+        <div class="mt-5 mb-9">
           <RequestTest
             @requested="setData"
             title="Request Analysis"
@@ -98,11 +99,15 @@
             :patientId="patientId"
             :disabled="disabled"
           />
-          <v-btn class="ma-1" color="error" outlined :disabled="disabled"
-            >Prescribe</v-btn
-          >
+          <Prescribe
+            @prescribed="setData"
+            :appointmentId="appointmentId"
+            :doctorId="doctorId"
+            :patientId="patientId"
+            :disabled="!!prescription || disabled"
+          />
           <v-btn
-            @click="updateAppointment({ status: 'done' })"
+            @click="finalize"
             class="ma-1"
             color="success"
             outlined
@@ -111,7 +116,16 @@
           >
         </div>
 
-        <v-row class="mt-5" no-gutters>
+        <v-card class="mt-4" v-if="prescription">
+          <v-card class="px-5 pt-2 pb-1 mb-2" color="primary" dark>
+            Prescription
+          </v-card>
+          <v-card-text>
+            <div>{{ prescription.description }}</div>
+          </v-card-text>
+        </v-card>
+
+        <v-row class="mt-4" no-gutters>
           <v-col class="mr-1">
             <TestLists title="Analysis" :tests="analysis" />
           </v-col>
@@ -135,14 +149,18 @@ import { appointmentService } from '@/services/api';
 import TestLists from '@/components/lists/Tests';
 import AppointmentsPatientTable from '@/components/tables/AppointmentsPatient';
 import RequestTest from '@/components/popups/RequestTest';
-import Notification from '@/components/Notification';
+import Prescribe from '@/components/popups/Prescribe';
+import Notification from '@/components/elements/Notification';
+import Loader from '@/components/elements/Loader';
 
 export default {
   components: {
     TestLists,
     AppointmentsPatientTable,
     RequestTest,
+    Prescribe,
     Notification,
+    Loader,
   },
   props: {
     isReadOnly: { type: Boolean, default: false },
@@ -177,10 +195,13 @@ export default {
         []
       );
     },
+    prescription() {
+      return (this.appointment && this.appointment.prescription) || null;
+    },
   },
   data() {
     return {
-      isLoaded: false,
+      isLoading: true,
       disabled: false,
       appointment: null,
       doneAppointmentsOfPatient: [],
@@ -191,7 +212,7 @@ export default {
     await this.setData();
     if (this.appointment) {
       this.disabled = this.isReadOnly || this.appointment.status === 'done';
-      this.isLoaded = true;
+      this.isLoading = false;
     }
   },
   methods: {
@@ -221,6 +242,11 @@ export default {
         this.updateAppointment(payload);
       }, 1000);
     },
+    async finalize(){
+      await this.updateAppointment({ status: 'done' })
+      this.disabled = true
+      await this.setData()
+    }
   },
 };
 </script>

@@ -13,7 +13,7 @@
     <div v-else>
       <v-row>
         <v-col cols="10" offset="1">
-          <div class="title mb-5">Analysis List</div>
+          <div class="title mb-5">Imaging List</div>
           <v-data-table
             :headers="headers"
             :items="tests"
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     async setData() {
-      this.tests = (await appointmentService.getTestsByPatientId(this.userId)).analysis
+      this.tests = (await appointmentService.getTestsByPatientId(this.userId)).imaging
       console.log(this.tests)
     },
   },

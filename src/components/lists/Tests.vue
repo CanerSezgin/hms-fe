@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="mb-1" style="font-size: 1.2rem">{{ title }}</div>
+    <v-card class="px-5 pt-2 pb-1 mb-2" color="primary" dark>
+      <div class="mb-1" style="font-size: 1.2rem">{{ title }}</div>
+    </v-card>
     <div v-for="(item, index) in tests" :key="index">
       <v-card class="mb-1" outlined >
         <v-list-item class="px-3" two-line>

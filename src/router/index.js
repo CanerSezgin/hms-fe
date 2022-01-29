@@ -25,8 +25,9 @@ import Patient from '../views/Patient';
 import PatientAppointments from '../views/Patient/Appointments.vue';
 import NewAppointment from '../views/Patient/NewAppointment.vue';
 import Diseases from '../views/Patient/Diseases.vue';
-import Reports from '../views/Patient/Reports.vue';
+import PatientImaging from '../views/Patient/Imaging.vue';
 import Analysis from '../views/Patient/Analysis.vue';
+import PatientPrescriptions from "../views/Patient/Prescriptions.vue"
 
 Vue.use(VueRouter);
 
@@ -139,8 +140,8 @@ const routes = [
       },
       {
         path: 'prescriptions',
-        name: 'Prescriptions',
-        component: Prescriptions,
+        name: 'PatientPrescriptions',
+        component: PatientPrescriptions,
       },
       {
         path: 'diseases',
@@ -148,9 +149,9 @@ const routes = [
         component: Diseases,
       },
       {
-        path: 'reports',
-        name: 'Reports',
-        component: Reports,
+        path: 'imaging',
+        name: 'PatientImaging',
+        component: PatientImaging,
       },
       {
         path: 'analysis',
