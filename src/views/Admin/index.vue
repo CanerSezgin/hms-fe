@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-navigation-drawer v-model="drawer" app>
-      
       <UserInfo />
 
       <v-divider></v-divider>
@@ -30,6 +29,9 @@
     <v-container class="py-8 px-6" fluid>
       <v-row>
         <v-col cols="12">
+          <div v-if="isHomepage">
+            <Dashboard />
+          </div>
           <router-view></router-view>
         </v-col>
       </v-row>
@@ -38,11 +40,16 @@
 </template>
 
 <script>
-import UserInfo from "@/components/menu/UserInfo"
+import Dashboard from './Dashboard';
+import UserInfo from '@/components/menu/UserInfo';
 export default {
-  components: { UserInfo },
+  components: { Dashboard, UserInfo },
+  computed: {
+    isHomepage() {
+      return this.$route.name === 'Admin';
+    },
+  },
   data: () => ({
-    
     cards: ['Today', 'Yesterday'],
     drawer: null,
     links: [

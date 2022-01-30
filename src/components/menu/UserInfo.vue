@@ -1,8 +1,8 @@
 <template>
   <div v-if="user">
     <v-sheet color="grey lighten-4" class="pa-4 text-center">
-      <v-avatar class="mb-4" color="grey darken-1" size="64">
-        <img src="" />
+      <v-avatar class="mb-4"  size="64">
+        <img :src="require('@/assets/img/avatar.png')" />
       </v-avatar>
 
       <div>

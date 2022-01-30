@@ -1,33 +1,47 @@
 <template>
   <div>
-    <div class="mt-1 headline">Appointments</div>
-    <v-btn class="mt-2" absolute top right color="primary" to="new-appointment"
-      >New Appointment</v-btn
-    >
-    <div class="mt-7">
-      <AppointmentsPatientTable
-        title="New Appointments"
-        class="mt-5"
-        :appointments="doneAppointments"
-        :isDone="true"
-      />
+    <div v-if="isLoading">
+      <Loader />
+    </div>
 
-      <AppointmentsPatientTable
-        title="Old Appointments"
-        class="mt-12"
-        :appointments="pendingAppointments"
-        :isDone="false"
-      />
+    <div v-else>
+      <div class="mt-1 headline">Appointments</div>
+      <v-btn
+        class="mt-2"
+        absolute
+        top
+        right
+        color="primary"
+        to="new-appointment"
+        >New Appointment</v-btn
+      >
+      <div class="mt-7">
+        <AppointmentsPatientTable
+          title="New Appointments"
+          class="mt-5"
+          :appointments="doneAppointments"
+          :isDone="true"
+        />
+
+        <AppointmentsPatientTable
+          title="Old Appointments"
+          class="mt-12"
+          :appointments="pendingAppointments"
+          :isDone="false"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import AppointmentsPatientTable from '@/components/tables/AppointmentsPatient';
 import { appointmentService } from '@/services/api';
+import AppointmentsPatientTable from '@/components/tables/AppointmentsPatient';
+import Loader from '@/components/elements/Loader';
 export default {
   components: {
+    Loader,
     AppointmentsPatientTable,
   },
   computed: {
@@ -35,12 +49,14 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       pendingAppointments: [],
       doneAppointments: [],
     };
   },
   async created() {
     await this.setData();
+    this.isLoading = false;
   },
   methods: {
     async setData() {

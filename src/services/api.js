@@ -182,3 +182,13 @@ export const userService = {
     return doctors;
   },
 };
+
+export const statsService = {
+  async get() {
+    const url = `/admin/stats/`;
+    const {
+      data
+    } = await client.get(url);
+    return data;
+  },
+}

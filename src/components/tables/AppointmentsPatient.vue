@@ -20,15 +20,17 @@
 
       <template v-slot:[`item.tests`]="{ item }">
         <div>
-          <div
+          <span
             v-for="analysis in [
               ...(item.tests.analysis || []),
               ...(item.tests.imaging || []),
             ]"
             :key="analysis._id"
           >
-            {{ analysis.testTypeId.name }}
-          </div>
+            <span class="mr-1">
+              <AnalysisResultTooltip :analysis="analysis" />
+            </span>
+          </span>
         </div>
       </template>
 
@@ -40,12 +42,14 @@
 </template>
 
 <script>
+import AnalysisResultTooltip from '@/components/elements/AnalysisResultTooltip';
 export default {
   props: {
     title: { type: String },
     appointments: { type: Array, required: true },
     isDone: { type: Boolean, required: true },
   },
+  components: { AnalysisResultTooltip },
   computed: {
     headers() {
       if (this.isDone) {

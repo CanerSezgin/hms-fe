@@ -4,7 +4,7 @@
       <div class="mb-1" style="font-size: 1.2rem">{{ title }}</div>
     </v-card>
     <div v-for="(item, index) in tests" :key="index">
-      <v-card class="mb-1" outlined >
+      <v-card class="mb-1" outlined>
         <v-list-item class="px-3" two-line>
           <v-list-item-content>
             <v-list-item-title class="primary--text mb-0">{{
@@ -17,15 +17,11 @@
               <div class="font-weight-bold">Requested At:</div>
               <div>{{ item.requestedAt | formatDateFull }}</div>
             </v-list-item-subtitle>
-
-            <div
-              v-if="item.result"
-              style="position: absolute; right: 15px; cursor: pointer"
-              @click=""
-            >
-              <v-icon>mdi-file-chart-outline</v-icon>
-            </div>
           </v-list-item-content>
+
+          <div v-if="item.status === 'done'">
+            <AnalysisResultTooltip :analysis="item" />
+          </div>
         </v-list-item>
       </v-card>
     </div>
@@ -33,7 +29,10 @@
 </template>
 
 <script>
+import AnalysisResultTooltip from '@/components/elements/AnalysisResultTooltip';
+
 export default {
+  components: { AnalysisResultTooltip },
   props: {
     title: {
       type: String,
