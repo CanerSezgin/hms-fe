@@ -19,15 +19,15 @@
         <AppointmentsPatientTable
           title="New Appointments"
           class="mt-5"
-          :appointments="doneAppointments"
-          :isDone="true"
+          :appointments="pendingAppointments"
+          :isDone="false"
         />
 
         <AppointmentsPatientTable
           title="Old Appointments"
           class="mt-12"
-          :appointments="pendingAppointments"
-          :isDone="false"
+          :appointments="doneAppointments"
+          :isDone="true"
         />
       </div>
     </div>

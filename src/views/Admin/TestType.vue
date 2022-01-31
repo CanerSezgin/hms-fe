@@ -52,7 +52,6 @@
     </v-data-table>
 
     <v-dialog v-model="formDialog" max-width="500px">
-      Form: {{ form }} {{ actionType }}
       <TestType
         :form="form"
         :actionType="actionType"
