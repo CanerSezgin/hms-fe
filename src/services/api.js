@@ -27,6 +27,19 @@ export const appointmentService = {
     } = await client.get(url);
     return appointment;
   },
+  async getByDate(date, pagination = { page: 1, limit: 12 }){
+    const url = `/appointments/search`;
+    const payload = {
+      date,
+      populate: true,
+      ...pagination,
+    };
+    console.log('getUnpaidAppointments', payload);
+    const {
+      data: { appointments },
+    } = await client.post(url, payload);
+    return appointments
+  },
   async getByDoctorIdAndDate(doctorId, date) {
     const url = `/appointments/search`;
     const payload = {

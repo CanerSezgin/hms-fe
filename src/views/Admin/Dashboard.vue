@@ -4,13 +4,13 @@
       <Loader />
     </div>
     <div v-else>
-      <v-row class="mt-5 justify-center">
+      <v-row class="mt-12 justify-center">
         <InfoCard
           class="mx-3"
           title="Number of Appointments"
           :value="stats.appointments.count"
           :width="cardWidth"
-          color="primary"
+          color="teal"
           :dark="true"
         />
 
@@ -19,7 +19,7 @@
           title="Number of Analysis"
           :value="stats.analysis.count"
           :width="cardWidth"
-          color="primary"
+          color="teal"
           :dark="true"
         />
 
@@ -28,7 +28,7 @@
           title="Number of Imaging"
           :value="stats.imaging.count"
           :width="cardWidth"
-          color="primary"
+          color="teal"
           :dark="true"
         />
       </v-row>
@@ -40,7 +40,7 @@
           :value="stats.appointments.amount"
           suffix="USD"
           :width="cardWidth"
-          color="primary"
+          color="teal"
           :dark="true"
         />
 
@@ -50,7 +50,7 @@
           :value="stats.analysis.amount"
           suffix="USD"
           :width="cardWidth"
-          color="primary"
+          color="teal"
           :dark="true"
         />
 
@@ -60,14 +60,14 @@
           :value="stats.imaging.amount"
           suffix="USD"
           :width="cardWidth"
-          color="primary"
+          color="teal"
           :dark="true"
         />
       </v-row>
 
-      <v-row class="mt-10 justify-center">
+      <v-row class="mt-16 justify-center">
         <v-card width="950">
-          <v-card class="px-5 py-3 title" color="primary" dark>
+          <v-card class="px-5 py-3 title" color="blue-grey darken-2" dark>
             Appointments Report by Specializations
           </v-card>
 
